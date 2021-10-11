@@ -24,7 +24,7 @@
 			} else {
 				?>
 				<div class="alert alert-warning">
-					<strong>Este usuario ja existe </strong><a href="login.php" class="alert-link">Faça o login agora </a>
+					<strong>Este usuario ja existe! </strong><a href="login.php" class="alert-link">Faça o login agora </a>
 				</div>
 				<?php 
 			}
