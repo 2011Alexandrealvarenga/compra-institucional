@@ -18,7 +18,18 @@
 			<div class="navbar-header">
 				<a href="./" class="navbar-brand">Classificados</a>
 			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="">Cadastre-se</a></li>
+				<li><a href="">Login</a></li>
+			</ul>
 		</div>
 	</nav>
+	<div class="container-fluid">
+		<div class="jumbotron">
+			<h2>nos temos hoje 999 anuncios</h2>
+			<p>e mais 999 usuarios cadastrados</p>
+
+		</div>
+	</div>
 </body>
 </html>
