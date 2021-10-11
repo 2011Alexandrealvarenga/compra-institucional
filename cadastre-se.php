@@ -1,6 +1,43 @@
 <?php require 'pages/header.php' ;?>
 <div class="container">
 	<h1>Cadastre-se</h1>
+	<?php require 'classes/usuarios.class.php';
+	$u = new Usuarios();
+	// se o campo nome nao esta vazio
+	if(isset($_POST['nome']) && !empty($_POST['nome'])){
+
+		// filtrar 
+		$nome = addslashes($_POST['nome']);
+		$email = addslashes($_POST['email']);
+		$senha = $_POST['senha'];
+		$telefone = addslashes($_POST['telefone']);
+
+		// se os campos nao estao vazio, enviará
+		if(!empty($nome) && !empty($email) && !empty($senha)){
+			// se o cadastro estiver ok entao, senao 
+			if($u->cadastrar($nome, $email, $senha, $telefone)){
+				?>
+				<div class="alert alert-success">
+					<strong>Parabnes</strong> Cadastrado com sucesso. <a href="login.php" class="alert-link">Faça o login agora </a>
+				</div>
+				<?php 
+			} else {
+				?>
+				<div class="alert alert-warning">
+					<strong>Este usuario ja existe </strong><a href="login.php" class="alert-link">Faça o login agora </a>
+				</div>
+				<?php 
+			}
+
+		}else{
+			?>
+			<div class="alert alert-warning">
+				Preencha todos os campos!
+			</div>
+			<?php 
+		}
+	}
+	;?>
 	<form method="POST">
 		<div class="form-group">
 			<label for="nome">Nome:</label>
