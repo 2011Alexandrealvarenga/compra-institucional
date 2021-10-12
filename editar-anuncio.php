@@ -16,7 +16,14 @@ if(isset($_POST['titulo']) && !empty($_POST['titulo'])){
     $descricao = addslashes($_POST['descricao']);
     $estado = addslashes($_POST['estado']);
 
-    $a->editAnuncio($titulo, $categoria, $valor, $descricao, $estado, $_GET['id']);
+    // se inserir fotos entao insira fotos, senao retorna um array vazio
+    if(isset($_FILES['fotos'])){
+        $fotos = $_FILES['fotos'];
+    }else{
+        $fotos = array();
+    }
+
+    $a->editAnuncio($titulo, $categoria, $valor, $descricao, $estado, $fotos, $_GET['id']);
     ?>
     <div class="alert alert-success">
         Produto Editado com sucesso!
@@ -77,6 +84,14 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
                 </select>
         </div>
         <!-- envio de imagens -->
+        <div class="form-group">
+            <label for="add_foto">Fotos do anuncio:</label>
+            <input type="file" name="fotos[]" multiple /><br>
+            <div class="panel panel-default">
+                <div class="panel-heading">Fotos do Anuncio</div>
+                <div class="panel-body"></div>
+            </div>
+        </div>
         <input type="submit" value="Salvar" class="btn btn-default" />
     </form>
 </div>
