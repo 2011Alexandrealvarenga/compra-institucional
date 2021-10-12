@@ -24,11 +24,38 @@ class Anuncios {
         $array = array();
         global $pdo;
 
-        $sql = $pdo->prepare('select * from anuncios where id = :id');
-        $sql->bindValue(':id',$id);
+        $sql = $pdo->prepare("SELECT * FROM anuncios where id = :id");
+        $sql->bindValue(':id', $id);
+        $sql->execute();
+
+        // se tiver mais que 0 linha
+        if($sql->rowCount() > 0){
+            $array = $sql->fetch();
+        }
+        return $array;
+    }
+    public function editAnuncio($titulo, $categoria, $valor, $descricao, $estado, $id){
+        global $pdo;
+        $sql = $pdo->prepare('UPDATE anuncios SET 
+        titulo = :titulo,
+        id_categoria = :id_categoria,
+        id_usuario = :id_usuario,
+        descricao = :descricao,
+        valor = :valor,
+        estado = :estado
+        WHERE id = :id'
+    );
+        $sql->bindValue(":titulo", $titulo);
+        $sql->bindValue(":id_categoria", $categoria);
+        $sql->bindValue(":id_usuario", $_SESSION['cLogin']);
+        $sql->bindValue(":descricao", $descricao);
+        $sql->bindValue(":valor", $valor);
+        $sql->bindValue(":estado", $estado);
+        $sql->bindValue(":id", $id);
         $sql->execute();
     }
     // fim - edita anuncio
+
     public function addAnuncio($titulo, $categoria, $valor, $descricao, $estado){
         global $pdo;
         $sql = $pdo->prepare('insert into anuncios set 
@@ -46,6 +73,7 @@ class Anuncios {
         $sql->bindValue(":estado", $estado);
         $sql->execute();
     }
+
     // excluir anuncio
     public function excluirAnuncio($id){
         global $pdo;
