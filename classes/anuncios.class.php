@@ -19,6 +19,16 @@ class Anuncios {
         }
         return $array;
     }
+    // edita anuncio
+    public function getAnuncio($id){
+        $array = array();
+        global $pdo;
+
+        $sql = $pdo->prepare('select * from anuncios where id = :id');
+        $sql->bindValue(':id',$id);
+        $sql->execute();
+    }
+    // fim - edita anuncio
     public function addAnuncio($titulo, $categoria, $valor, $descricao, $estado){
         global $pdo;
         $sql = $pdo->prepare('insert into anuncios set 
