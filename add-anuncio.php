@@ -7,6 +7,22 @@ if(empty($_SESSION['cLogin'])){
     <?php 
     exit;
 }
+require 'classes/anuncios.class.php';
+$a = new Anuncios();
+if(isset($_POST['titulo']) && !empty($_POST['titulo'])){
+    $titulo = addslashes($_POST['titulo']);
+    $categoria = addslashes($_POST['categoria']);
+    $valor = addslashes($_POST['valor']);
+    $descricao = addslashes($_POST['descricao']);
+    $estado = addslashes($_POST['estado']);
+
+    $a->addAnuncio($titulo, $categoria, $valor, $descricao, $estado);
+    ;?>
+    <div class="alert alert-success">
+        Produto adicionado com sucesso!
+    </div>
+    <?php 
+}
 ;?>
 <div class="container">
     <h1>Meus Anuncios - Adicionar Anuncio</h1>
@@ -14,7 +30,15 @@ if(empty($_SESSION['cLogin'])){
         <div class="form-group">
             <label for="categoria">Categoria:</label>
             <select name="categoria" id="categoria" class="form-control">
-                <option value=""></option>
+                <?php 
+                require 'classes/categorias.class.php';
+                $c = new Categorias();
+                $cats = $c->getLista();
+
+                foreach($cats as $cat):              
+                ;?>
+                <option value="<?php echo $cat['id'] ;?>"> <?php echo utf8_encode($cat['nome']) ;?></option>
+                <?php endforeach ;?>
             </select>
         </div>
         <div class="form-group">
