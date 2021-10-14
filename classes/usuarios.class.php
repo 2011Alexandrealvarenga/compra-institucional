@@ -1,6 +1,12 @@
 <?php 
 class Usuarios{
+    public function getTotalUsuarios(){
+        global $pdo;
+        $sql = $pdo->query("SELECT COUNT(*) as c FROM usuarios");
+        $row = $sql->fetch();
 
+        return $row['c'];
+    }
     public function cadastrar($nome, $email, $senha, $telefone){
         global $pdo;
         // verifica se ja tem um email repetido

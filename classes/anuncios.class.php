@@ -1,5 +1,37 @@
 <?php 
 class Anuncios {
+
+    public function getTotalAnuncios(){
+        global $pdo;
+        $sql = $pdo->query("SELECT COUNT(*) as c FROM anuncios");
+        $row = $sql->fetch();
+
+        return $row['c'];
+    }
+    public function getUltimosAnuncios(){
+        global $pdo;
+
+        $array = array();        
+        $sql = $pdo->prepare("SELECT 
+        *,
+        (select anuncios_imagens.url from anuncios_imagens where anuncios_imagens
+        .id_anuncio = anuncios.id limit 1) as url,
+        (select categoria.nome from categorias where categorias.id = anuncios.id_categoria) as categoria 
+        FROM anuncios");
+        $sql->execute();
+
+        // verifica se tem algum resultado e retorna todos
+        if($sql->rowCount() > 0){
+            $array = $sql->fetchAll();
+        }
+        return $array;
+    }
+
+
+
+
+
+
     public function getMeusAnuncios(){
         global $pdo;
 
