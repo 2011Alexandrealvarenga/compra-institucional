@@ -42,7 +42,7 @@ $anuncios = $a->getUltimosAnuncios($p, $por_pagina);
 								<?php endif; ?>
 							</td>
 							<td>
-								<a href="produto.php?id=<?php $anuncio['id']; ?>">
+								<a href="produto.php?id=<?php echo $anuncio['id']; ?>">
 								<?php echo $anuncio['titulo'] ;?></a><br>
 								<?php echo utf8_encode($anuncio['categoria']) ;?>
 							</td>
