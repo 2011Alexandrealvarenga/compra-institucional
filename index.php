@@ -7,6 +7,16 @@ $u = new Usuarios();
 
 $total_anuncios = $a->getTotalAnuncios();
 $total_usuarios = $u->getTotalUsuarios();
+
+$p = 1;
+if(isset($_GET['P']) && !EMPTY($_GET['p'])){
+	$p = addslashes($_GET['p']);
+}
+
+// 2 é o numero de itens por pagina
+$por_pagina = 2;
+$total_paginas = ceil($total_anuncios / $por_pagina);
+$anuncios = $a->getUltimosAnuncios($p, $por_pagina);
 ;?>
 	<div class="container-fluid">
 		<div class="jumbotron">
@@ -32,16 +42,25 @@ $total_usuarios = $u->getTotalUsuarios();
 								<?php endif; ?>
 							</td>
 							<td>
-								<a href="produto.php?id=<?php $anuncio['id']; ?><?php echo $anuncio['titulo']; ?>"></a><br>
-								<?php echo $anuncio['categoria'] ;?>
+								<a href="produto.php?id=<?php $anuncio['id']; ?>">
+								<?php echo $anuncio['titulo'] ;?></a><br>
+								<?php echo utf8_encode($anuncio['categoria']) ;?>
+							</td>
+							<td>								
+								<?php echo $anuncio['descricao'] ;?></a>
 							</td>
 							<td>
 								R$ <?php echo number_format($anuncio['valor'], 2); ?>
 							</td>
-						</tr>
+						</tr>						
 						<?php endforeach; ?>
 					</tbody>
 				</table>
+				<ul class="pagination">
+					<?php for($q=1;$q<=$total_paginas;$q++): ?>
+					<li><a href="index.php?p=<?php echo $q; ?>"><?php echo $q; ?></a></li>
+					<?php endfor; ?>
+				</ul>						
 			</div>
 		</div>
 	</div>

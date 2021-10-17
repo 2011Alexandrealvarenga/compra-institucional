@@ -8,16 +8,19 @@ class Anuncios {
 
         return $row['c'];
     }
-    public function getUltimosAnuncios(){
+    public function getUltimosAnuncios($page, $perPage){
         global $pdo;
+
+        // paginacao começa de zero, nao exite pagina zero
+        $offset = ($page - 1) * 2;
 
         $array = array();        
         $sql = $pdo->prepare("SELECT 
         *,
         (select anuncios_imagens.url from anuncios_imagens where anuncios_imagens
         .id_anuncio = anuncios.id limit 1) as url,
-        (select categoria.nome from categorias where categorias.id = anuncios.id_categoria) as categoria 
-        FROM anuncios");
+        (select categorias.nome from categorias where categorias.id = anuncios.id_categoria) as categoria 
+        FROM anuncios ORDER BY id DESC limit $offset, $perPage");
         $sql->execute();
 
         // verifica se tem algum resultado e retorna todos
